@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: font1;
+  src: url(../public/Lausanne-300.woff2);
+}
+@font-face {
+  font-family: font2;
+  src: url(../public/Lausanne-500.woff2 );
+}
+
+body{
+  background: white;
+}
+
+/* Add this CSS to fix the overlapping text issue */
+
+.link {
+  position: relative;
+  overflow: hidden; /* This is crucial - it clips the animated content */
+}
+
+.moveLink {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  opacity: 0; /* Start hidden */
+  transition: opacity 0.3s ease;
+}
+
+/* Show the animated overlay on hover */
+.link:hover .moveLink {
+  opacity: 1;
+}
+
+/* Ensure the marquee animation works */
+.moveX {
+  display: flex;
+  animation: marquee 20s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Make sure the static text doesn't show through */
+.link:hover h1 {
+  opacity: 0;
+}
+
+.link h1 {
+  transition: opacity 0.3s ease;
+}
+
+.dome-gallery {
+  position: relative;
+  width: 800px;
+  height: 800px;
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease-out;
+  cursor: grab;
+}
+
+.dome-gallery:active {
+  cursor: grabbing;
+}
+
+.dome-image-container {
+  position: absolute;
+  width: 240px;
+  height: 160px;
+  transition: transform 0.6s ease, scale 0.6s ease;
+}
+
+.dome-image-container img {
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dome-image-container.zoomed img {
+  transform: scale(2.2);
+  box-shadow: 0 10px 40px rgba(255, 255, 255, 0.3);
+  z-index: 10;
+}
+
